@@ -21,7 +21,7 @@ class UserController extends Controller
         ]);
 
         // perform the query using the User model
-        $user = User::where('email', $request->email)->first();
+        $user = DB::table('users')->where('email', $request->email)->first();
 
         return response()->json($user);
     }
