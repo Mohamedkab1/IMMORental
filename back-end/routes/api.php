@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PropertyController;
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
@@ -9,4 +10,12 @@ Route::middleware('auth:sanctum')->get('/dashboard', function () {
 });
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index']);
+});
+
+Route::middleware('auth:sanctum')->group(function(){
+    Route::get('/properties', function () {
+        return \App\Models\Property::where('user_id', auth()->id())->get();
+    });    
+    Route::put('/properties/{id}',[PropertyController::class,'update']);
+    Route::delete('/properties/{id}',[PropertyController::class,'destroy']);
 });
