@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -36,7 +37,6 @@ class AuthController extends Controller
         ], 201);
     }
 
-
     public function login(Request $request){
         $request->validate([
             'email' => 'required|email',
@@ -50,7 +50,6 @@ class AuthController extends Controller
         }
 
         $user = Auth::user();
-
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
@@ -58,5 +57,41 @@ class AuthController extends Controller
             'token_type' => 'Bearer',
             'user' => $user
         ]);
+    }
+
+    public function showLoginForm()
+    {
+        return view('login');
+    }
+
+    public function loginWeb(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required'
+        ]);
+
+        if (Auth::attempt($request->only('email', 'password'))) {
+            $request->session()->regenerate();
+            $user = Auth::user();
+            if ($user->role === 'admin') {
+                return redirect('/admin/dashboard');
+            } else {
+                return redirect('/user/dashboard');
+            }
+        }
+
+        return back()->withErrors([
+            'email' => 'Email ou mot de passe incorrect'
+        ]);
+    }
+
+    public function logoutWeb(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/login');
     }
 }
