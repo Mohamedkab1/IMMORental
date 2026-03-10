@@ -52,4 +52,15 @@ class PropertyController extends Controller
             'message' => 'Property deleted successfully'
         ]);
     }
+    public function show($id){
+        $property = Property::with(['agent','images'])->find($id);
+
+        if(!$property){
+            return response()->json([
+                'message' => 'Bien introuvable'
+            ],404);
+        }
+
+        return response()->json($property);
+    }
 }

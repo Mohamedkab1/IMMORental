@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import EditProperty from "./pages/EditProperty";
+import PropertyDetail from "./pages/PropertyDetail";
 
 function App() {
   return (
@@ -18,6 +19,9 @@ function App() {
 
         {/* Page Modifier un bien */}
         <Route path="/edit-property/:id" element={<EditProperty />} />
+        
+        {/*page detail d'un bien */}
+        <Route path="/property/:id" element={<PropertyDetail />} />
 
       </Routes>
     </Router>
