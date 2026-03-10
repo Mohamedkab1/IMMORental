@@ -20,7 +20,7 @@ return new class extends Migration
             $table->enum('statut', ['disponible', 'reserve', 'loue'])->default('disponible');
 
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('categorie_id')->constrained()->nullOnDelete();
+            $table->foreignId('categorie_id')->nullable()->constrained()->nullOnDelete();
             $table->timestamps();
         });
     }
