@@ -18,17 +18,19 @@ function PropertyList() {
   });
 
   const navigate = useNavigate();
+  const [cityFilter, setCityFilter] = useState("");
 
   // jib done mn API
   useEffect(() => {
-    api.get("/properties", { params: { page, limit } })
-      .then(res => {
-        setProperties(res.data.data);
-        setTotalPages(res.data.totalPages);
-        setFilteredProperties(res.data.data);
-      })
-      .catch(err => console.log(err));
-  }, [page]);
+  api.get("/properties", {
+    params: { page, limit, city: cityFilter } 
+  })
+  .then(res => {
+    setProperties(res.data.data);    
+    setTotalPages(res.data.totalPages); 
+  })
+  .catch(err => console.log(err));
+}, [page, cityFilter]); // cityFilter
 
   // filter and sort donee
   useEffect(() => {
@@ -80,6 +82,17 @@ function PropertyList() {
   return (
     <div>
       <h1>Liste des biens</h1>
+
+      <div style={{marginBottom: "20px"}}>
+  <label>Filtrer par ville: </label>
+  <select value={cityFilter} onChange={e => setCityFilter(e.target.value)}>
+    <option value="">Toutes</option>
+    <option value="Casablanca">Casablanca</option>
+    <option value="Marrakech">Marrakech</option>
+    <option value="Rabat">Rabat</option>
+    {/* add other cities */}
+  </select>
+</div>
 
       {/*  filters  */}
       <div style={{ marginBottom: "20px" }}>
