@@ -6,6 +6,11 @@ function Dashboard() {
   const [properties, setProperties] = useState([]);
   const navigate = useNavigate();
 
+  const logout = () => {
+  localStorage.removeItem("token");
+  navigate("/login");
+};
+
   // Charger les biens de l'utilisateur
   useEffect(() => {
     api.get("/properties") // Route qui retourne les biens connectés
@@ -45,6 +50,12 @@ function Dashboard() {
 
   return (
     <div>
+      <button 
+  onClick={logout}
+  style={{marginBottom: "20px"}}
+>
+  Logout
+</button>
       <h1>Dashboard</h1>
 
       {properties.length === 0 ? (
