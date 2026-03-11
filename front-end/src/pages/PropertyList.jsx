@@ -6,11 +6,20 @@ function PropertyList() {
   const [properties, setProperties] = useState([]);
   const navigate = useNavigate();
 
+  const [page, setPage] = useState(1);        
+  const [limit] = useState(5);              
+  const [totalPages, setTotalPages] = useState(1); 
+
   useEffect(() => {
-    api.get("/properties")
-      .then(res => setProperties(res.data))
-      .catch(err => console.log(err));
-  }, []);
+  api.get("/properties", {
+    params: { page, limit }
+  })
+  .then(res => {
+    setProperties(res.data.data);    
+    setTotalPages(res.data.totalPages); 
+  })
+  .catch(err => console.log(err));
+}, [page]);
 
   return (
     <div>
@@ -24,6 +33,15 @@ function PropertyList() {
           <button onClick={() => navigate(`/properties/${p.id}`)}>Voir détail</button>
         </div>
       ))}
+      <div style={{marginTop: "20px"}}>
+  <button onClick={() => setPage(p => Math.max(p-1, 1))} disabled={page === 1}>
+    Précédent
+  </button>
+  <span style={{margin: "0 10px"}}>Page {page} / {totalPages}</span>
+  <button onClick={() => setPage(p => Math.min(p+1, totalPages))} disabled={page === totalPages}>
+    Suivant
+  </button>
+      </div>
     </div>
   );
 }
