@@ -19,18 +19,19 @@ function PropertyList() {
 
   const navigate = useNavigate();
   const [cityFilter, setCityFilter] = useState("");
+  const [type, setType] = useState("");
 
   // jib done mn API
   useEffect(() => {
   api.get("/properties", {
-    params: { page, limit, city: cityFilter } 
+    params: { page, limit, city: cityFilter, type: type } 
   })
   .then(res => {
     setProperties(res.data.data);    
     setTotalPages(res.data.totalPages); 
   })
   .catch(err => console.log(err));
-}, [page, cityFilter]); // cityFilter
+}, [page, cityFilter, type]);
 
   // filter and sort donee
   useEffect(() => {
@@ -91,6 +92,16 @@ function PropertyList() {
     <option value="Marrakech">Marrakech</option>
     <option value="Rabat">Rabat</option>
     {/* add other cities */}
+  </select>
+</div>
+      
+      <div style={{marginBottom: "20px"}}>
+  <label>Filtrer par type: </label>
+  <select value={type} onChange={e => setType(e.target.value)}>
+    <option value="">Tous</option>
+    <option value="appartement">Appartement</option>
+    <option value="villa">Villa</option>
+    <option value="local">Local</option>
   </select>
 </div>
 
