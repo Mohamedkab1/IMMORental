@@ -22,6 +22,7 @@ function PropertyList() {
   const [type, setType] = useState("");
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
+  const [keyword, setKeyword] = useState("");
 
   // jib done mn API
   useEffect(() => {
@@ -32,7 +33,8 @@ function PropertyList() {
       city: cityFilter,
       type: type,
       minPrice: minPrice,
-      maxPrice: maxPrice
+      maxPrice: maxPrice,
+      keyword: keyword
     }
   })
   .then(res => {
@@ -40,7 +42,7 @@ function PropertyList() {
     setTotalPages(res.data.totalPages);
   })
   .catch(err => console.log(err));
-}, [page, cityFilter, type, minPrice, maxPrice]);
+}, [page, cityFilter, type, minPrice, maxPrice, keyword]);
 
   // filter and sort donee
   useEffect(() => {
@@ -128,6 +130,15 @@ function PropertyList() {
     type="number"
     value={maxPrice}
     onChange={(e)=>setMaxPrice(e.target.value)}
+  />
+</div>
+
+      <div style={{marginBottom:"20px"}}>
+  <input
+    type="text"
+    placeholder="Rechercher..."
+    value={keyword}
+    onChange={(e)=>setKeyword(e.target.value)}
   />
 </div>
 
