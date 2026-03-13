@@ -19,10 +19,13 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 Route::middleware('auth:sanctum')->group(function(){
-    
+
     Route::get('/properties', [PropertyController::class, 'index']);
 
     Route::get('/properties/{id}', [PropertyController::class,'show']);
     Route::put('/properties/{id}',[PropertyController::class,'update']);
     Route::delete('/properties/{id}',[PropertyController::class,'destroy']);
+
+    Route::put('/demands/{id}/status', [DemandController::class, 'updateStatus']);
+    
 });
