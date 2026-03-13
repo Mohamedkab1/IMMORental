@@ -30,3 +30,4 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::put('/demands/{id}/status', [DemandController::class, 'updateStatus']);
 
 });
+

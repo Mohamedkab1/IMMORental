@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class DemandController extends Controller
 {
-    // Liste des demandes avec pagination et filtre par statut
+    // Liste des demandes avec pagination et filtre b statut
     public function index(Request $request)
     {
         $query = Demand::query();
@@ -25,7 +25,7 @@ class DemandController extends Controller
         ]);
     }
 
-    // Détail d’une demande
+    // Détail dune demande
     public function show($id)
     {
         $demand = Demand::find($id);
@@ -37,7 +37,7 @@ class DemandController extends Controller
         return response()->json($demand);
     }
 
-    // Changer le statut (uniquement agent/admin)
+    // Changer le statut (uniquement agent / admin)
     public function updateStatus(Request $request, $id)
     {
         $demand = Demand::findOrFail($id);
@@ -60,5 +60,7 @@ class DemandController extends Controller
         ]);
     }
 
-    
+
 }
+
+
