@@ -20,18 +20,27 @@ function PropertyList() {
   const navigate = useNavigate();
   const [cityFilter, setCityFilter] = useState("");
   const [type, setType] = useState("");
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
 
   // jib done mn API
   useEffect(() => {
   api.get("/properties", {
-    params: { page, limit, city: cityFilter, type: type } 
+    params: {
+      page,
+      limit,
+      city: cityFilter,
+      type: type,
+      minPrice: minPrice,
+      maxPrice: maxPrice
+    }
   })
   .then(res => {
-    setProperties(res.data.data);    
-    setTotalPages(res.data.totalPages); 
+    setProperties(res.data.data);
+    setTotalPages(res.data.totalPages);
   })
   .catch(err => console.log(err));
-}, [page, cityFilter, type]);
+}, [page, cityFilter, type, minPrice, maxPrice]);
 
   // filter and sort donee
   useEffect(() => {
@@ -103,6 +112,23 @@ function PropertyList() {
     <option value="villa">Villa</option>
     <option value="local">Local</option>
   </select>
+</div>
+  
+      
+      <div style={{marginBottom:"20px"}}>
+  <label>Prix min: </label>
+  <input
+    type="number"
+    value={minPrice}
+    onChange={(e)=>setMinPrice(e.target.value)}
+  />
+
+  <label style={{marginLeft:"10px"}}>Prix max: </label>
+  <input
+    type="number"
+    value={maxPrice}
+    onChange={(e)=>setMaxPrice(e.target.value)}
+  />
 </div>
 
       {/*  filters  */}
