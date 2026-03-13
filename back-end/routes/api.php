@@ -26,6 +26,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::put('/properties/{id}',[PropertyController::class,'update']);
     Route::delete('/properties/{id}',[PropertyController::class,'destroy']);
 
+    Route::get('/demands', [DemandController::class, 'index']);
     Route::put('/demands/{id}/status', [DemandController::class, 'updateStatus']);
-    
+
 });
