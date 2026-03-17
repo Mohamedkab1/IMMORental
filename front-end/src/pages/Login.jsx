@@ -33,7 +33,13 @@ function Login() {
     // ✅ res existe ici
     localStorage.setItem("token", res.data.access_token);
 
-    navigate("/dashboard");
+    const user = res.data.user;
+
+if (user.role === "admin") {
+  navigate("/admin/dashboard");
+} else {
+  navigate("/user/dashboard");
+}
 
   })
   .catch((err) => {

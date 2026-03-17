@@ -52,6 +52,52 @@ class PropertyController extends Controller
             'message' => 'Property deleted successfully'
         ]);
     }
+
+    public function index(Request $request)
+{
+    $query = Property::query();
+
+    // filtre ville
+    if ($request->city) {
+        $query->where('city', $request->city);
+    }
+
+    // filtre type
+    if ($request->type) {
+        $query->where('type', $request->type);
+    }
+
+    // filtre prix min
+    if ($request->minPrice) {
+        $query->where('price', '>=', $request->minPrice);
+    }
+
+    // filtre prix max
+    if ($request->maxPrice) {
+        $query->where('price', '<=', $request->maxPrice);
+    }
+
+    // recherche mot-clé
+    if ($request->keyword) {
+        $query->where('title', 'like', '%' . $request->keyword . '%');
+    }
+
+    // tri prix
+    if ($request->sort === "asc") {
+        $query->orderBy('price', 'asc');
+    }
+
+    if ($request->sort === "desc") {
+        $query->orderBy('price', 'desc');
+    }
+
+    $properties = $query->with('images')->paginate($request->limit ?? 5);
+
+    return response()->json([
+        'data' => $properties->items(),
+        'totalPages' => $properties->lastPage()
+    ]);
+}
     public function show($id){
         $property = Property::with(['agent','images'])->find($id);
 

@@ -2,12 +2,10 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PropertyController;
-<<<<<<< HEAD
 use App\Http\Controllers\MessageController;
-=======
 use App\Http\Controllers\BienController;
-
->>>>>>> ajouter-bien
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DemandController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -27,12 +25,16 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 Route::middleware('auth:sanctum')->group(function(){
-    Route::get('/properties', function () {
-        return \App\Models\Property::where('user_id', auth()->id())->get();
-    });
+
+    Route::get('/properties', [PropertyController::class, 'index']);
+
     Route::get('/properties/{id}', [PropertyController::class,'show']);
     Route::put('/properties/{id}',[PropertyController::class,'update']);
     Route::delete('/properties/{id}',[PropertyController::class,'destroy']);
+
+    Route::get('/demands', [DemandController::class, 'index']);
+    Route::put('/demands/{id}/status', [DemandController::class, 'updateStatus']);
+
 });
 
 Route::post('/biens', [BienController::class,'store']);
