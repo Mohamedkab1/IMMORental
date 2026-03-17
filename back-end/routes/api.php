@@ -2,7 +2,12 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PropertyController;
+<<<<<<< HEAD
 use App\Http\Controllers\MessageController;
+=======
+use App\Http\Controllers\BienController;
+
+>>>>>>> ajouter-bien
 
 use Illuminate\Support\Facades\Route;
 
@@ -29,3 +34,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::put('/properties/{id}',[PropertyController::class,'update']);
     Route::delete('/properties/{id}',[PropertyController::class,'destroy']);
 });
+
+Route::post('/biens', [BienController::class,'store']);
+
+Route::apiResource('biens', BienController::class);
