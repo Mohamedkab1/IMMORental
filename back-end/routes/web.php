@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DemandeController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -19,4 +21,10 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/dashboard', function () {
         return view('admin.dashboard');
     })->name('admin.dashboard');
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/demandes/create', [DemandeController::class, 'create'])->name('demandes.create');
+    Route::post('/demandes', [DemandeController::class, 'store'])->name('demandes.store');
+    Route::get('/demandes/{demande}/confirmation', [DemandeController::class, 'confirmation'])->name('demandes.confirmation');
 });
