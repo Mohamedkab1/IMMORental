@@ -6,6 +6,7 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\BienController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DemandController;
+use App\Http\Controllers\AdminController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -40,3 +41,7 @@ Route::middleware('auth:sanctum')->group(function(){
 Route::post('/biens', [BienController::class,'store']);
 
 Route::apiResource('biens', BienController::class);
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/admin/dashboard', [AdminController::class, 'dashboard']);
+});

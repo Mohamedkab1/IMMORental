@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import EditProperty from "./pages/EditProperty";
 import AddBien from "./components/AddBien";
+import AdminDashboard from "./pages/AdminDashboard";
 
 function App() {
   return (
@@ -20,6 +21,11 @@ function App() {
         {/* Page Modifier un bien */}
         <Route path="/edit-property/:id" element={<EditProperty />} />
 
+        {/* Admin Dashboard */}
+        <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        {/* Ajouter un bien */}
+        <Route path="/add-property" element={<AddBien />} />
+        
       </Routes>
     </Router>
   );
